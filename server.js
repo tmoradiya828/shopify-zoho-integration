@@ -39,38 +39,83 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // --- API Endpoints ---
 
 app.post("/api/track-cart", (req, res) => {
-  const { cart } = req.body;
 
-  if (!cart || !cart.token) {
-    return res.status(400).send({ message: "Cart data or token is missing." });
-  }
+  let data = JSON.stringify({
+  "data": [
+    {
+      "First_Name": "Test",
+      "Last_Name": "Testing",
+      "Email": "dummyoctfis.d@octfis.com",
+      "Street": "Test",
+      "City": "Surat",
+      "Mobile": "+919546823758",
+      "Zip_Code": "395004",
+      "State": "Gujarat",
+      "Country": "India",
+      "Note_Your_Concern": "Test Note",
+      "Currency": "INR",
+      "Lead_Source": "Shopify",
+      "Lead_Status": "New Lead",
+      "Layout": "910013000001551368"
+    }
+  ]
+});
 
-  const cartToken = cart.token;
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://www.zohoapis.in/crm/v7/Leads',
+  headers: { 
+    'Authorization': 'Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582', 
+    'Content-Type': 'application/json', 
+    'Cookie': '_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a'
+  },
+  data : data
+};
 
-  if (trackedCarts[cartToken]) {
-    return res.status(200).send({ message: "Cart already being tracked." });
-  }
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
 
-  console.log(`🛍️ Tracking new cart: ${cartToken}`);
-  trackedCarts[cartToken] = {
-    cartData: cart,
-    checkoutStarted: false,
-    createdAt: Date.now(),
-  };
+  // const { cart } = req.body;
 
-  // Schedule abandoned cart check (10 seconds for testing)
-  const checkDelay = 10 * 1000;
-  setTimeout(() => {
-    checkAndSendToZoho(cartToken);
-  }, checkDelay);
+  // if (!cart || !cart.token) {
+  //   return res.status(400).send({ message: "Cart data or token is missing." });
+  // }
 
-  res.status(200).send({ message: "Cart is now being tracked." });
+  // const cartToken = cart.token;
+
+  // if (trackedCarts[cartToken]) {
+  //   return res.status(200).send({ message: "Cart already being tracked." });
+  // }
+
+  // console.log(`🛍️ Tracking new cart: ${cartToken}`);
+  // trackedCarts[cartToken] = {
+  //   cartData: cart,
+  //   checkoutStarted: false,
+  //   createdAt: Date.now(),
+  // };
+
+  // // Schedule abandoned cart check (10 seconds for testing)
+  // const checkDelay = 10 * 1000;
+  // setTimeout(() => {
+  //   checkAndSendToZoho(cartToken);
+  // }, checkDelay);
+
+  // res.status(200).send({ message: "Cart is now being tracked." });
 });
 
 app.post("/api/checkout-started", (req, res) => {
+
+
   const { cartToken } = req.body;
 
   if (!cartToken || !trackedCarts[cartToken]) {
