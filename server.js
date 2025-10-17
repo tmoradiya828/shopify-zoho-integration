@@ -130,8 +130,8 @@ async function refreshAccessToken() {
 
 async function sendCartToZoho(cart) {
   const email = cart.customer.email || "dummyoctfis.d@octfis.com";
-  const first_name = cart.customer.first_name || "Test";
-  const last_name = cart.customer.last_name || "Testing";
+  const first_name = cart.customer.first_name || "Shopify";
+  const last_name = cart.customer.last_name || "Customer";
   const phone = cart.customer.phone || "+919546823758";
   const items = cart.items.map(i => `${i.title} x${i.quantity}`).join(", ");
   const total = (cart.total_price / 100).toFixed(2);
@@ -167,6 +167,7 @@ async function sendCartToZoho(cart) {
     console.log("📡 Sending lead to Zoho...");
     const response = await axios.request(config);
     console.log("✅ Zoho Response:", response.data);
+     console.log("✅ Lead successfully sent to Zoho CRM.");
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.warn("⚠️ Access token expired. Refreshing...");
