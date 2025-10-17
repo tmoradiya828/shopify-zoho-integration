@@ -235,9 +235,9 @@ async function makeZohoApiCall(data) {
     },
     body: JSON.stringify(data),
   });
-console.log(ZOHO.apiUrl);
-console.log(ZOHO.accessToken);
-console.log(response);
+//console.log(ZOHO.apiUrl);
+//console.log(ZOHO.accessToken);
+//console.log(response);
   if (response.status === 401) {
     console.log("⚠️ Received 401 Unauthorized. Token is likely expired.");
     try {
