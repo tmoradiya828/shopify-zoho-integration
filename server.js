@@ -154,19 +154,39 @@ async function refreshAccessToken() {
       }),
     });
 
+    // Get the response as plain text first, before trying to parse it as JSON
+    const responseBody = await response.text();
+
     if (!response.ok) {
-        const errorBody = await response.text();
-        console.error("❌ Token refresh FAILED. Response:", errorBody);
-        throw new Error(`Token refresh failed: ${response.status} - ${errorBody}`);
+        console.error("❌ Token refresh FAILED. Status:", response.status);
+        console.error("❌ Response body from Zoho:", responseBody);
+        throw new Error(`Token refresh failed: ${response.status} - ${responseBody}`);
     }
 
-    const data = await response.json();
+    // Now, try to parse the text as JSON
+    let data;
+    try {
+        data = JSON.parse(responseBody);
+    } catch (parseError) {
+        console.error("❌ Failed to parse Zoho response as JSON. The raw response was:", responseBody);
+        throw new Error("Zoho response was not valid JSON.");
+    }
+
+    // CRITICAL CHECK: Does the access token actually exist in the response?
+    if (!data.access_token) {
+        console.error("❌ CRITICAL ERROR: Zoho did not return an access_token in the response.");
+        console.error("❌ The full response from Zoho was:", data);
+        throw new Error("Zoho token refresh response is missing an access_token.");
+    }
+
+    // If we got here, we have a valid token
     ZOHO.accessToken = data.access_token;
     console.log("✅ Zoho access token refreshed successfully. New token starts with:", ZOHO.accessToken.substring(0, 20) + "...");
     return data.access_token;
+
   } catch (error) {
-    console.error("❌ CRITICAL: Failed to refresh Zoho access token.", error);
-    throw error; // Re-throw the error so the calling function knows it failed
+    console.error("❌ CRITICAL: An exception occurred during token refresh.", error);
+    throw error;
   }
 }
 
