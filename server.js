@@ -136,13 +136,20 @@ async function sendCartToZoho(cart) {
   let data = JSON.stringify({
     "data": [
       {
-        First_Name: "Shopify",
-        Last_Name: "Customer",
-        Email: email,
-        Note_Your_Concern: `Abandoned cart total $${total} — Items: ${items}`,
-        Lead_Source: "Shopify",
-        Lead_Status: "New Lead",
-        Layout: "910013000001551368",
+        "First_Name": "Test",
+      "Last_Name": "Testing",
+      "Email": "dummyoctfis.d@octfis.com",
+      "Street": "Test",
+      "City": "Surat",
+      "Mobile": "+919546823758",
+      "Zip_Code": "395004",
+      "State": "Gujarat",
+      "Country": "India",
+      "Note_Your_Concern": "Test Note",
+      "Currency": "INR",
+      "Lead_Source": "Shopify",
+      "Lead_Status": "New Lead",
+      "Layout": "910013000001551368"
       },
     ],
   });
