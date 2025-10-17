@@ -182,7 +182,7 @@ async function sendCartToZoho(cart) {
       Note_Your_Concern: `Abandoned cart total $${total} — Items: ${items}`,
     }],
   };
-  console.log(lead);
+  
   try {
     const response = await makeZohoApiCall(lead);
     if (!response.ok) {
@@ -207,7 +207,7 @@ async function makeZohoApiCall(data) {
     },
     body: JSON.stringify(data),
   });
-console.log(response);
+
   if (response.status === 401) {
     console.log("🔄 Zoho token expired, refreshing...");
     await refreshAccessToken();
