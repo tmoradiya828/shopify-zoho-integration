@@ -230,7 +230,7 @@ async function makeZohoApiCall(data) {
   let response = await fetch(ZOHO.apiUrl, {
     method: "POST",
     headers: {
-      Authorization: "Zoho-oauthtoken " +ZOHO.accessToken,
+      "Authorization": "Zoho-oauthtoken " +ZOHO.accessToken,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
