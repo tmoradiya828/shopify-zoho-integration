@@ -129,24 +129,20 @@ async function refreshAccessToken() {
 // --- Send Lead to Zoho ---
 
 async function sendCartToZoho(cart) {
-  const email = cart.email || "unknown@example.com";
+  const email = cart.customer.email || "unknown@example.com";
+  const first_name = cart.customer.first_name || "unknown@example.com";
+  const last_name = cart.customer.last_name || "unknown@example.com";
   const items = cart.items.map(i => `${i.title} x${i.quantity}`).join(", ");
   const total = (cart.total_price / 100).toFixed(2);
 
   let data = JSON.stringify({
     "data": [
       {
-        "First_Name": "Test",
-      "Last_Name": "Testing",
+        "First_Name": first_name,
+      "Last_Name": last_name,
       "Email": email,
-      "Street": "Test",
-      "City": "Surat",
       "Mobile": "+919546823758",
-      "Zip_Code": "395004",
-      "State": "Gujarat",
-      "Country": "India",
-      "Note_Your_Concern": "Test Note",
-      "Currency": "INR",
+      "Note_Your_Concern": "Abandoned cart total $${total} — Items: ${items}",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
       "Layout": "910013000001551368"
