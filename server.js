@@ -2,6 +2,7 @@
 
 const express = require('express');
 const fetch = require('node-fetch'); // You may need to run: npm install node-fetch@2
+var cors = require('cors');
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON bodies
