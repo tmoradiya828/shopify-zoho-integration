@@ -157,8 +157,8 @@ async function sendCartToZoho(cart) {
     maxBodyLength: Infinity,
     url: ZOHO.apiUrl,
     headers: {
-      Authorization: `Zoho-oauthtoken ${ZOHO.accessToken}`,
-      "Content-Type": "application/json",
+      Authorization: 'Zoho-oauthtoken ${ZOHO.accessToken}',
+      'Content-Type': 'application/json',
     },
     data: data,
   };
