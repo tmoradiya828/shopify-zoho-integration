@@ -180,7 +180,7 @@ async function sendCartToZoho(cart) {
       Description: `Abandoned cart total $${total} — Items: ${items}`,
     }],
   };
-
+  console.log(lead);
   try {
     const response = await makeZohoApiCall(lead);
     if (!response.ok) {
