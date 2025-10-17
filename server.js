@@ -174,10 +174,20 @@ async function sendCartToZoho(cart) {
 
   const lead = {
     data: [{
+      First_Name: "Shopify Customer",
       Last_Name: "Shopify Customer",
       Email: email,
-      Lead_Source: "Shopify Abandoned Cart",
-      Description: `Abandoned cart total $${total} — Items: ${items}`,
+      Street: "Test",
+      City: "Surat",
+      Mobile: "+919546823758",
+      Zip_Code: "395004",
+      State: "Gujarat",
+      Country: "India",
+      Lead_Source: "Shopify",
+      Lead_Source: "New Lead",
+      Currency: "INR",
+      Layout: "910013000001551368",
+      Note_Your_Concern: `Abandoned cart total $${total} — Items: ${items}`,
     }],
   };
   console.log(lead);
