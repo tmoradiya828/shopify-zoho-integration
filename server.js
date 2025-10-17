@@ -147,7 +147,7 @@ async function sendCartToZoho(cart) {
         Note_Your_Concern: `Abandoned cart total $${total} — Items: ${items}`,
         Lead_Source: "Shopify",
         Lead_Status: "New Lead",
-        Layout: { id: "910013000001551368" },
+        Layout: "910013000001551368",
       },
     ],
   });
