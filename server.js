@@ -76,7 +76,8 @@ app.post('/api/track-cart', (req, res) => {
   };
 
   // Schedule the abandoned cart check (e.g., 1 hour)
-  const checkDelay = 60 * 60 * 1000; // 1 hour in milliseconds
+  //const checkDelay = 60 * 60 * 1000; // 1 hour in milliseconds
+  const checkDelay = 10 * 1000; // 1 hour in milliseconds
   // For testing, use 10 seconds: const checkDelay = 10000;
 
   setTimeout(() => {
