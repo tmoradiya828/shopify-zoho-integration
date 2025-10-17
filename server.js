@@ -134,7 +134,7 @@ async function sendCartToZoho(cart) {
   const total = (cart.total_price / 100).toFixed(2);
 
   let data = JSON.stringify({
-    data: [
+    "data": [
       {
         First_Name: "Shopify",
         Last_Name: "Customer",
@@ -158,7 +158,8 @@ async function sendCartToZoho(cart) {
   url: 'https://www.zohoapis.in/crm/v7/Leads',
   headers: { 
     'Authorization': 'Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582', 
-    'Content-Type': 'application/json', 
+    'Content-Type': 'application/json',
+    'Cookie': '_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a'
   },
   data : data
 };
@@ -170,10 +171,10 @@ async function sendCartToZoho(cart) {
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.warn("⚠️ Access token expired. Refreshing...");
-      await refreshAccessToken();
+      //await refreshAccessToken();
 
       // Retry once
-      config.headers.Authorization = `Zoho-oauthtoken ${ZOHO.accessToken}`;
+      config.headers.Authorization = `Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582`;
       const retry = await axios.request(config);
       console.log("✅ Retried Zoho API successfully:", retry.data);
     } else {
