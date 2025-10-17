@@ -138,7 +138,7 @@ async function sendCartToZoho(cart) {
       {
         "First_Name": "Test",
       "Last_Name": "Testing",
-      "Email": "dummyoctfis.d@octfis.com",
+      "Email": email,
       "Street": "Test",
       "City": "Surat",
       "Mobile": "+919546823758",
