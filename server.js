@@ -141,6 +141,7 @@ async function checkAndSendToZoho(cartToken) {
  * Refreshes the Zoho access token.
  */
 async function refreshAccessToken() {
+  console.log("🔄 Attempting to refresh Zoho access token...");
   try {
     const response = await fetch(ZOHO.tokenUrl, {
       method: "POST",
@@ -153,14 +154,19 @@ async function refreshAccessToken() {
       }),
     });
 
-    if (!response.ok) throw new Error(`Token refresh failed: ${response.status}`);
+    if (!response.ok) {
+        const errorBody = await response.text();
+        console.error("❌ Token refresh FAILED. Response:", errorBody);
+        throw new Error(`Token refresh failed: ${response.status} - ${errorBody}`);
+    }
+
     const data = await response.json();
     ZOHO.accessToken = data.access_token;
-    console.log("✅ Zoho access token refreshed.");
+    console.log("✅ Zoho access token refreshed successfully. New token starts with:", ZOHO.accessToken.substring(0, 20) + "...");
     return data.access_token;
   } catch (error) {
-    console.error("❌ Failed to refresh Zoho access token:", error);
-    throw error;
+    console.error("❌ CRITICAL: Failed to refresh Zoho access token.", error);
+    throw error; // Re-throw the error so the calling function knows it failed
   }
 }
 
@@ -199,6 +205,8 @@ async function sendCartToZoho(cart) {
  * Makes an API call to Zoho, handling token refresh if needed.
  */
 async function makeZohoApiCall(data) {
+  console.log("📡 Making API call to Zoho with token starting with:", ZOHO.accessToken.substring(0, 20) + "...");
+  
   let response = await fetch(ZOHO.apiUrl, {
     method: "POST",
     headers: {
@@ -209,17 +217,24 @@ async function makeZohoApiCall(data) {
   });
 
   if (response.status === 401) {
-    console.log("🔄 Zoho token expired, refreshing...");
-    await refreshAccessToken();
-    // Retry with new token
-    response = await fetch(ZOHO.apiUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Zoho-oauthtoken ${ZOHO.accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    console.log("⚠️ Received 401 Unauthorized. Token is likely expired.");
+    try {
+      await refreshAccessToken();
+      console.log("🔄 Retrying API call with new token...");
+      // Retry with new token
+      response = await fetch(ZOHO.apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Zoho-oauthtoken ${ZOHO.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (refreshError) {
+        console.error("❌ Could not retry API call because token refresh failed.", refreshError);
+        // If refresh fails, we can't proceed. Throw an error to stop the process.
+        throw new Error("Zoho token refresh failed. Aborting API call.");
+    }
   }
   return response;
 }
