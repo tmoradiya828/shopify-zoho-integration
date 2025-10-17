@@ -237,12 +237,12 @@ async function makeZohoApiCall(data) {
   });
 
   try {
-    
+    console.log(ZOHO.accessToken);
       console.log("DONE");
       // Retry with new token
      
     } catch (error) {
-      console.error("❌ Error sending to Zoho:", error.message);
+      console.error("", error.message);
         // If refresh fails, we can't proceed. Throw an error to stop the process.
        throw error;
     }
