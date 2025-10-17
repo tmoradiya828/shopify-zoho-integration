@@ -103,9 +103,9 @@ async function refreshAccessToken() {
   console.log("🔄 Refreshing Zoho access token...");
 
   const params = new URLSearchParams({
-    refresh_token: ZOHO.refreshToken,
-    client_id: ZOHO.clientId,
-    client_secret: ZOHO.clientSecret,
+    refresh_token: "1000.a1829b2bb5d535c23e86e6d3dbd26751.c6bda94166b609c8b00542fc7f0ff8a0",
+    client_id: "1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C",
+    client_secret: "d2fa028fc8b3415b10928833fb231b824a0f5f628b",
     grant_type: "refresh_token",
   });
 
@@ -153,15 +153,15 @@ async function sendCartToZoho(cart) {
   });
 
   let config = {
-    method: "post",
-    maxBodyLength: Infinity,
-    url: ZOHO.apiUrl,
-    headers: {
-      Authorization: 'Zoho-oauthtoken ${ZOHO.accessToken}',
-      'Content-Type': 'application/json',
-    },
-    data: data,
-  };
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://www.zohoapis.in/crm/v7/Leads',
+  headers: { 
+    'Authorization': 'Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582', 
+    'Content-Type': 'application/json', 
+  },
+  data : data
+};
 
   try {
     console.log("📡 Sending lead to Zoho...");
