@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 // --- Configuration ---
 const ZOHO = {
   apiUrl: "https://www.zohoapis.in/crm/v7/Leads", // using .in for India accounts
-  accessToken: "1000.1143f37c0d93015e74c40bce03dd924b.3955bb117df105f72edd740103771979",
+  accessToken: "1000.407e6191d91dbb951384a7dd3ca78c31.cf769f511c8a73b95eb30e55102e85ab",
   refreshToken: "1000.a1829b2bb5d535c23e86e6d3dbd26751.c6bda94166b609c8b00542fc7f0ff8a0",
   clientId: "1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C",
   clientSecret: "d2fa028fc8b3415b10928833fb231b824a0f5f628b",
@@ -157,7 +157,7 @@ async function sendCartToZoho(cart) {
   maxBodyLength: Infinity,
   url: 'https://www.zohoapis.in/crm/v7/Leads',
   headers: { 
-    'Authorization': 'Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582', 
+    'Authorization': 'Zoho-oauthtoken 1000.407e6191d91dbb951384a7dd3ca78c31.cf769f511c8a73b95eb30e55102e85ab', 
     'Content-Type': 'application/json',
     'Cookie': '_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a'
   },
@@ -174,7 +174,7 @@ async function sendCartToZoho(cart) {
       //await refreshAccessToken();
 
       // Retry once
-      config.headers.Authorization = `Zoho-oauthtoken 1000.5661dc21df8d97b6afecfc2b7e7751f9.1ed4134181f8743d0c59f01c5c440582`;
+      config.headers.Authorization = `Zoho-oauthtoken 1000.407e6191d91dbb951384a7dd3ca78c31.cf769f511c8a73b95eb30e55102e85ab`;
       const retry = await axios.request(config);
       console.log("✅ Retried Zoho API successfully:", retry.data);
     } else {
