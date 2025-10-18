@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 const ZOHO = {
   apiUrl: "https://www.zohoapis.in/crm/v7/Leads", // using .in for India accounts
   accessToken: "1000.ec906c6c9465e479fd2b13d785c02c3c.9f0c2a0fcf142f70be64ce07ccee1ca7",
-  refreshToken: "1000.a1829b2bb5d535c23e86e6d3dbd26751.c6bda94166b609c8b00542fc7f0ff8a0",
+  refreshToken: "1000.07ee7b164b98028db248e4fb2a1163d3.ec0f80e9fb79d23656d6afee17094c99",
   clientId: "1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C",
   clientSecret: "d2fa028fc8b3415b10928833fb231b824a0f5f628b",
   tokenUrl: "https://accounts.zoho.in/oauth/v2/token",
@@ -102,41 +102,38 @@ async function checkAndSendToZoho(cartToken) {
 async function refreshAccessToken() {
   console.log("🔄 Refreshing Zoho access token...");
 
-  const refreshUrl = `${ZOHO.tokenUrl}?grant_type=refresh_token&client_id=${ZOHO.clientId}&client_secret=${ZOHO.clientSecret}&refresh_token=${ZOHO.refreshToken}`;
-  console.log("🌐 Refresh URL:", refreshUrl);
+  const params = new URLSearchParams({
+    refresh_token: ZOHO.refreshToken,
+    client_id: ZOHO.clientId,
+    client_secret: ZOHO.clientSecret,
+    grant_type: "refresh_token",
+  });
 
-  let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: refreshUrl,
-  headers: { 
-    'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
+
+//   let config = {
+//   method: 'post',
+//   maxBodyLength: Infinity,
+//   url: 'https://accounts.zoho.in/oauth/v2/token?grant_type=refresh_token&client_id=1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C&client_secret=d2fa028fc8b3415b10928833fb231b824a0f5f628b&refresh_token=1000.07ee7b164b98028db248e4fb2a1163d3.ec0f80e9fb79d23656d6afee17094c99',
+//   headers: { 
+//     'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
+//   }
+// };
+
+  try {
+    const res = await axios.post(ZOHO.tokenUrl, params);
+    console.log("📩 Zoho token response:", res.data);
+
+    if (!res.data.access_token) {
+      throw new Error("Zoho response missing access_token");
+    }
+
+    ZOHO.accessToken = res.data.access_token;
+    console.log("✅ Token refreshed successfully:", ZOHO.accessToken.substring(0, 20) + "...");
+    return ZOHO.accessToken;
+  } catch (err) {
+    console.error("❌ Token refresh failed:", err.response?.data || err.message);
+    throw err;
   }
-};
-
-axios.request(config)
-.then((response) => {
-  console.log(JSON.stringify(response.data));
-})
-.catch((error) => {
-  console.log(error);
-});
-
-  // try {
-  //   const res = await axios.post(refreshUrl);
-  //   console.log("📩 Zoho token response:", res.data);
-
-  //   if (!res.data.access_token) {
-  //     throw new Error("Zoho response missing access_token");
-  //   }
-
-  //   ZOHO.accessToken = res.data.access_token;
-  //   console.log("✅ Token refreshed successfully:", ZOHO.accessToken.substring(0, 20) + "...");
-  //   return ZOHO.accessToken;
-  // } catch (err) {
-  //   console.error("❌ Token refresh failed:", err.response?.data || err.message);
-  //   throw err;
-  // }
 }
 
 // --- Send Lead to Zoho ---
