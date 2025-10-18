@@ -147,7 +147,7 @@ async function sendCartToZoho(cart) {
   quantity: item.quantity,
   price: item.final_price / 100,
   currency: cart.currency,
-  url: `https://${Shopify.shop}/products/${item.handle}`
+  url: `https://fitmantra.co.in/products/${item.handle}`
 }));
 
   let data = JSON.stringify({
