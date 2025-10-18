@@ -105,30 +105,38 @@ async function refreshAccessToken() {
   const refreshUrl = `${ZOHO.tokenUrl}?grant_type=refresh_token&client_id=${ZOHO.clientId}&client_secret=${ZOHO.clientSecret}&refresh_token=${ZOHO.refreshToken}`;
   console.log("🌐 Refresh URL:", refreshUrl);
 
-//   let config = {
-//   method: 'post',
-//   maxBodyLength: Infinity,
-//   url: refreshUrl,
-//   headers: { 
-//     'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
-//   }
-// };
-
-  try {
-    const res = await axios.post(refreshUrl);
-    console.log("📩 Zoho token response:", res.data);
-
-    if (!res.data.access_token) {
-      throw new Error("Zoho response missing access_token");
-    }
-
-    ZOHO.accessToken = res.data.access_token;
-    console.log("✅ Token refreshed successfully:", ZOHO.accessToken.substring(0, 20) + "...");
-    return ZOHO.accessToken;
-  } catch (err) {
-    console.error("❌ Token refresh failed:", err.response?.data || err.message);
-    throw err;
+  let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: refreshUrl,
+  headers: { 
+    'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
   }
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+  // try {
+  //   const res = await axios.post(refreshUrl);
+  //   console.log("📩 Zoho token response:", res.data);
+
+  //   if (!res.data.access_token) {
+  //     throw new Error("Zoho response missing access_token");
+  //   }
+
+  //   ZOHO.accessToken = res.data.access_token;
+  //   console.log("✅ Token refreshed successfully:", ZOHO.accessToken.substring(0, 20) + "...");
+  //   return ZOHO.accessToken;
+  // } catch (err) {
+  //   console.error("❌ Token refresh failed:", err.response?.data || err.message);
+  //   throw err;
+  // }
 }
 
 // --- Send Lead to Zoho ---
