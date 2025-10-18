@@ -110,15 +110,6 @@ async function refreshAccessToken() {
   });
 
 
-//   let config = {
-//   method: 'post',
-//   maxBodyLength: Infinity,
-//   url: 'https://accounts.zoho.in/oauth/v2/token?grant_type=refresh_token&client_id=1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C&client_secret=d2fa028fc8b3415b10928833fb231b824a0f5f628b&refresh_token=1000.07ee7b164b98028db248e4fb2a1163d3.ec0f80e9fb79d23656d6afee17094c99',
-//   headers: { 
-//     'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
-//   }
-// };
-
   try {
     const res = await axios.post(ZOHO.tokenUrl, params);
     console.log("📩 Zoho token response:", res.data);
