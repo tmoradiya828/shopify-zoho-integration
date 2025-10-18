@@ -102,15 +102,20 @@ async function checkAndSendToZoho(cartToken) {
 async function refreshAccessToken() {
   console.log("🔄 Refreshing Zoho access token...");
 
-  const params = new URLSearchParams({
-    refresh_token: ZOHO.refreshToken,
-    client_id: ZOHO.clientId,
-    client_secret: ZOHO.clientSecret,
-    grant_type: "refresh_token",
-  });
+  const refreshUrl = `${ZOHO.tokenUrl}?grant_type=refresh_token&client_id=${ZOHO.clientId}&client_secret=${ZOHO.clientSecret}&refresh_token=${ZOHO.refreshToken}`;
+  console.log("🌐 Refresh URL:", refreshUrl);
+
+//   let config = {
+//   method: 'post',
+//   maxBodyLength: Infinity,
+//   url: refreshUrl,
+//   headers: { 
+//     'Cookie': '_zcsr_tmp=296966b9-eabc-47b4-b5c1-ce551759e65b; iamcsr=296966b9-eabc-47b4-b5c1-ce551759e65b; zalb_6e73717622=dea4bb29906843a6fbdf3bd5c0e43d1d'
+//   }
+// };
 
   try {
-    const res = await axios.post(ZOHO.tokenUrl, params);
+    const res = await axios.post(refreshUrl);
     console.log("📩 Zoho token response:", res.data);
 
     if (!res.data.access_token) {
