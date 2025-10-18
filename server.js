@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.  .PORT || 3000;
 
 // --- Configuration ---
 const ZOHO = {
@@ -156,7 +156,7 @@ async function sendCartToZoho(cart) {
   maxBodyLength: Infinity,
   url: 'https://www.zohoapis.in/crm/v7/Leads',
   headers: { 
-    'Authorization': 'Zoho-oauthtoken 1000.ec906c6c9465e479fd2b13d785c02c3c.9f0c2a0fcf142f70be64ce07ccee1ca7', 
+    'Authorization': 'Zoho-oauthtoken ${ZOHO.accessToken}', 
     'Content-Type': 'application/json',
     'Cookie': '_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a'
   },
