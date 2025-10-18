@@ -153,9 +153,10 @@ async function sendCartToZoho(cart) {
       "Street": address1,
       "City": city,
       "State": province,
+      "Country": country,
       "Zip_Code": zip,
       "Currency": currency,
-      "Note_Your_Concern": "Abandoned cart total $${total} — Items: ${items}",
+      "Note_Your_Concern": "Abandoned cart",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
       "Layout": "910013000001551368"
