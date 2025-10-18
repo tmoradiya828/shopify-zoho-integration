@@ -133,17 +133,26 @@ async function sendCartToZoho(cart) {
   const email = cart.customer.email || "dummyoctfis.d@octfis.com";
   const first_name = cart.customer.first_name || "Shopify";
   const last_name = cart.customer.last_name || "Customer";
-  const phone = cart.customer.phone || "+919546823758";
+  const phone = cart.customer.phone || "+910000000000";
+  const address1 = cart.customer.address1 || " ";
+  const city = cart.customer.city || " ";
+  const country = cart.customer.country || " ";
+  const province = cart.customer.province || " ";
+  const zip = cart.customer.zip || " ";
   const items = cart.items.map(i => `${i.title} x${i.quantity}`).join(", ");
   const total = (cart.total_price / 100).toFixed(2);
 
   let data = JSON.stringify({
     "data": [
       {
-        "First_Name": first_name,
+      "First_Name": first_name,
       "Last_Name": last_name,
       "Email": email,
       "Mobile": phone,
+      "Street": address1,
+      "City": city,
+      "State": province,
+      "Zip_Code": zip,
       "Note_Your_Concern": "Abandoned cart total $${total} — Items: ${items}",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
