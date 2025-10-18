@@ -140,8 +140,15 @@ async function sendCartToZoho(cart) {
   const province = cart.customer.province || " ";
   const zip = cart.customer.zip || " ";
   const currency = cart.currency || "INR";
-  const items = cart.items.map(i => `${i.title} x${i.quantity}`).join(", ");
-  const total = (cart.total_price / 100).toFixed(2);
+
+  const productDetails = cart.items.map(item => ({
+  name: item.product_title,
+  variant: item.variant_title || '',
+  quantity: item.quantity,
+  price: item.final_price / 100,
+  currency: cart.currency,
+  url: `https://${Shopify.shop}/products/${item.handle}`
+}));
 
   let data = JSON.stringify({
     "data": [
@@ -159,7 +166,8 @@ async function sendCartToZoho(cart) {
       "Note_Your_Concern": "Abandoned cart",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
-      "Layout": "910013000001551368"
+      "Layout": "910013000001551368",
+      "Products": JSON.stringify(productDetails),
       },
     ],
   });
