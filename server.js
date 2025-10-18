@@ -156,9 +156,10 @@ async function sendCartToZoho(cart) {
   maxBodyLength: Infinity,
   url: 'https://www.zohoapis.in/crm/v7/Leads',
   headers: { 
-    'Authorization': 'Zoho-oauthtoken ${ZOHO.accessToken}', 
+    Authorization: `Zoho-oauthtoken ${ZOHO.accessToken}`,
     'Content-Type': 'application/json',
-    'Cookie': '_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a'
+    Cookie:
+        "_zcsr_tmp=0a8c1750-e975-47fc-9c0e-ea627e628c3a; crmcsr=0a8c1750-e975-47fc-9c0e-ea627e628c3a"
   },
   data : data
 };
