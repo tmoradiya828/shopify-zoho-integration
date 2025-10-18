@@ -103,9 +103,9 @@ async function refreshAccessToken() {
   console.log("🔄 Refreshing Zoho access token...");
 
   const params = new URLSearchParams({
-    refresh_token: "1000.a1829b2bb5d535c23e86e6d3dbd26751.c6bda94166b609c8b00542fc7f0ff8a0",
-    client_id: "1000.PNRE5G8CDI88P8IVZD7RINQFAURL0C",
-    client_secret: "d2fa028fc8b3415b10928833fb231b824a0f5f628b",
+    refresh_token: ZOHO.refreshToken,
+    client_id: ZOHO.clientId,
+    client_secret: ZOHO.clientSecret,
     grant_type: "refresh_token",
   });
 
@@ -171,10 +171,10 @@ async function sendCartToZoho(cart) {
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.warn("⚠️ Access token expired. Refreshing...");
-      //await refreshAccessToken();
+      await refreshAccessToken();
 
       // Retry once
-      config.headers.Authorization = `Zoho-oauthtoken 1000.ec906c6c9465e479fd2b13d785c02c3c.9f0c2a0fcf142f70be64ce07ccee1ca7`;
+      config.headers.Authorization = `Zoho-oauthtoken ${ZOHO.accessToken}`;
       const retry = await axios.request(config);
       console.log("✅ Retried Zoho API successfully:", retry.data);
     } else {
