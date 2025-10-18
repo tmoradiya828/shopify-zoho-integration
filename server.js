@@ -139,6 +139,7 @@ async function sendCartToZoho(cart) {
   const country = cart.customer.country || " ";
   const province = cart.customer.province || " ";
   const zip = cart.customer.zip || " ";
+  const currency = cart.currency || "INR";
   const items = cart.items.map(i => `${i.title} x${i.quantity}`).join(", ");
   const total = (cart.total_price / 100).toFixed(2);
 
@@ -153,6 +154,7 @@ async function sendCartToZoho(cart) {
       "City": city,
       "State": province,
       "Zip_Code": zip,
+      "Currency": currency,
       "Note_Your_Concern": "Abandoned cart total $${total} — Items: ${items}",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
