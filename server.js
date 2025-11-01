@@ -141,13 +141,10 @@ async function sendCartToZoho(cart) {
   const zip = cart.customer.zip || " ";
   const currency = cart.currency || "INR";
 
-  const productDetails = cart.items.map(item => ({
-  name: item.product_title,
-  variant: item.variant_title || '',
-  quantity: item.quantity,
-  price: item.final_price / 100,
-  currency: cart.currency,
-  url: `https://fitmantra.co.in/products/${item.handle}`
+  const productDetails = cart.ZOHOproducts.map(item => ({
+  Product: item.zoho_product_id,
+  Quantity: item.quantity,
+  Rate: item.subtotal,
 }));
 
   let data = JSON.stringify({
@@ -167,7 +164,7 @@ async function sendCartToZoho(cart) {
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
       "Layout": "910013000001551368",
-      "Products": JSON.stringify(productDetails),
+      "Product_Details": JSON.stringify(productDetails),
       },
     ],
   });
