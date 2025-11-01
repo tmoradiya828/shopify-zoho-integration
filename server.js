@@ -163,6 +163,7 @@ async function sendCartToZoho(cart) {
       "Note_Your_Concern": "Abandoned cart",
       "Lead_Source": "Shopify",
       "Lead_Status": "New Lead",
+      "Lead_Type": "Product",
       "Layout": "910013000001551368",
       "Product_Details": JSON.stringify(productDetails),
       },
