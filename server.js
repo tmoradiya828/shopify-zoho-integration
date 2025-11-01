@@ -162,7 +162,7 @@ async function sendCartToZoho(cart) {
       "Currency": currency,
       "Note_Your_Concern": "Abandoned cart",
       "Lead_Source": "Website",
-      "Lead_Status": "Not Connected",
+      "Lead_Status": "New Lead",
       "Lead_Type": "Product",
       "Layout": "910013000001551368",
       "Product_Details": productDetails,
