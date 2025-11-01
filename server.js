@@ -166,12 +166,12 @@ async function sendCartToZoho(cart) {
       "Lead_Status": "New Lead",
       "Lead_Type": "Product",
       "Layout": "910013000001551368",
-      "Product_Details": JSON.stringify(productDetails),
+      "Product_Details": productDetails,
       },
     ],
   });
 
-  console.log("✅ Zoho Response:", data);
+ console.log("📦 Sending to Zoho:", JSON.parse(data));
 
   let config = {
   method: 'post',
