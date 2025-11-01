@@ -142,9 +142,7 @@ async function sendCartToZoho(cart) {
   const currency = cart.currency || "INR";
 
   const productDetails = cart.ZOHOproducts.map(item => ({
-  Product: {
-  	id:item.zoho_product_id
-  },
+  Product: item.zoho_product_id,
   Quantity: item.quantity,
   Rate: item.subtotal,
 }));
@@ -171,7 +169,7 @@ async function sendCartToZoho(cart) {
     ],
   });
 
-  console.log("✅ Zoho Response:", response.data);
+  console.log("✅ Zoho Response:", data);
 
   let config = {
   method: 'post',
