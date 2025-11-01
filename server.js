@@ -91,10 +91,7 @@ async function checkAndSendToZoho(cartToken) {
     await sendCartToZoho(cartState.cartData);
     console.log(`✅ Sent abandoned cart ${cartToken} to Zoho.`);
   } catch (err) {
-    console.error(`❌ Failed to send cart ${cartToken} to Zoho:`,{
-      status: err.response.status,
-      data: err.response.data
-    });
+    console.error(`❌ Failed to send cart ${cartToken} to Zoho:`, err.message);
   } finally {
     delete trackedCarts[cartToken];
   }
