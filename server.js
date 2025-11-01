@@ -169,6 +169,8 @@ async function sendCartToZoho(cart) {
     ],
   });
 
+  console.log("✅ Zoho Response:", response.data);
+
   let config = {
   method: 'post',
   maxBodyLength: Infinity,
