@@ -141,12 +141,12 @@ async function sendCartToZoho(cart) {
   const zip = cart.customer.zip || " ";
   const currency = cart.currency || "INR";
 
-  const productDetails = cart.ZOHOproducts.map(item => ({
-  "Product": item.zoho_product_id,
-  "Quantity": item.quantity,
-  "Rate": item.subtotal,
-  "Discount": item.subtotal,
-}));
+  const productDetailsString = cart.ZOHOproducts
+  .map(
+    (item) =>
+      `Product: ${item.zoho_product_id}, Qty: ${item.quantity}, Rate: ${item.subtotal}`
+  )
+  .join("\n");
 
   let data = JSON.stringify({
     "data": [
@@ -166,7 +166,7 @@ async function sendCartToZoho(cart) {
       "Lead_Status": "Not Connected",
       "Lead_Type": "Product",
       "Layout": "910013000001551368",
-      "Product_Details": productDetails,
+      "Product_Details": productDetailsString,
       },
     ],
   });
