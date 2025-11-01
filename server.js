@@ -166,7 +166,7 @@ async function sendCartToZoho(cart) {
       "Lead_Status": "Not Connected",
       "Lead_Type": "Product",
       "Layout": "910013000001551368",
-      "Product_Details": JSON.parse(productDetails),
+      "Product_Details": productDetails,
       },
     ],
   });
